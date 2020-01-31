@@ -6,32 +6,83 @@ class formbuilder
 {
     private $result;
 
+    /**
+     * Constructor of the forms by open and initialize the tag form
+     *
+     * @param string $action
+     * @param string $method
+     * @param string $class
+     */
+
     public function __construct($action = "", $method = "", $class = "")
     {
         $this->result .= "<form class='$class' method='$method' action='$action'>";
         return $this;
     }
 
+    /**
+     * Test of required or checked if the argument and the text are right, if not, the required or the checked will be disabled 
+     *
+     * @param [type] $arg
+     * @param [type] $text
+     * @return void
+     */
+
     private function test($arg, $text)
     {
         return !empty($arg) && ($arg == $text) ? "$text=$text" : "";
     }
 
-    public function label($for, string $text)
+    /**
+     * Display one label, all of the parameters are needed
+     *
+     * @param [type] $for
+     * @param string $text
+     * @return self
+     */
+
+    public function label($for, string $text): self
     {
         $this->result .= "<label type='$for'>$text</label>";
         return $this;
     }
 
-    public function input($type, $id, $name, $placeholder = "", $value = "", $size = "", $class = "", $required = "")
+    /**
+     * Display one input, only the name is required. If the type is empty, this value will be text by default.
+     *
+     * @param [type] $type
+     * @param [type] $id
+     * @param [type] $name
+     * @param string $placeholder
+     * @param string $value
+     * @param string $size
+     * @param string $class
+     * @param string $required
+     * @return self
+     */
+
+    public function input($name, $value = "", $type = "", $id = "", $class = "", $placeholder = "",  $size = "",  $required = ""): self
     {
         $b = $this->test($required, 'required');
-        $c = ($type == "submit") ? "" : ("placeholder=$placeholder");
-        $this->result .= "<input type='$type' id ='$id' class='$class' name ='$name' size ='$size' $b $c value='$value'>";
+        $c = ($type == "") ? "type='text'" : "type='$type'";
+        $this->result .= "<input $c id ='$id' class='$class' name ='$name' size ='$size' $b placeholder='$placeholder' value='$value'>";
         return $this;
     }
 
-    public function checkradio($type, $id, $name, $value, $checked = "", $required = "", $class = "")
+    /**
+     * Display one checkbox or one radio, they can be required or checked
+     * 
+     * @param [type] $type
+     * @param [type] $id
+     * @param [type] $name
+     * @param [type] $value
+     * @param string $checked
+     * @param string $required
+     * @param string $class
+     * @return self
+     */
+
+    public function checkradio($type, $name, $value, $checked = "", $required = "", $class = "", $id = ""): self
     {
         $b = $this->test($checked, 'checked');
         $c = $this->test($required, 'required');
@@ -39,7 +90,17 @@ class formbuilder
         return $this;
     }
 
-    public function file($id, $name, array $accept, $required = "")
+    /**
+     * Display one field to allow the user to upload one file
+     *
+     * @param [type] $id
+     * @param [type] $name
+     * @param array $accept
+     * @param string $required
+     * @return self
+     */
+
+    public function file($id, $name, array $accept, $required = ""): self
     {
         $b = $this->test($required, 'required');
         $result = [];
@@ -51,14 +112,37 @@ class formbuilder
         return $this;
     }
 
-    public function textarea($id, $name, $placeholder = "", $rows = "", $cols = "", $class = "", $required = "")
+    /**
+     * Display textarea, the id and the name are needed
+     * 
+     * @param [type] $id
+     * @param [type] $name
+     * @param string $placeholder
+     * @param string $rows
+     * @param string $cols
+     * @param string $class
+     * @param string $required
+     * @return self
+     */
+
+    public function textarea($id, $name, $placeholder = "", $rows = "", $cols = "", $class = "", $required = ""): self
     {
         $b = $this->test($required, 'required');
         $this->result .= "<textarea id ='$id' class='$class' name ='$name' rows='$rows' cols='$cols' placeholder='$placeholder'" . $b . "></textarea>";
         return $this;
     }
 
-    public function selectOpt($id, $name, array $option, $required = "")
+    /**
+     * Display one select with the given option array, keep in mind that the name of the option will be the same of the value
+     *
+     * @param [type] $id
+     * @param [type] $name
+     * @param array $option
+     * @param string $required
+     * @return self
+     */
+
+    public function selectOpt($id, $name, array $option, $required = ""): self
     {
         $b = $this->test($required, 'required');
         $result = [];
@@ -69,30 +153,57 @@ class formbuilder
         return $this;
     }
 
-    public function fieldset($type, $legend, array $array, $name)
+    /**
+     * Display fieldset with legend. The type of the inputs on the fieldset stay the same in all of this. 
+     *
+     * @param [type] $type
+     * @param [type] $legend
+     * @param array $array
+     * @param [type] $name
+     * @return self
+     */
+
+    public function fieldset($type, $legend, array $array, $name, $before = "true"): self
     {
+        $b = $before ? true : false;
         $table = [];
+
         foreach ($array as $val) {
-            array_push($table, "<input type='$type' id='$val' name='$name'>
-            <label for='$val'>" . ucfirst($val) . "</label><br>");
+            if ($b) {
+                array_push($table, "<input type='$type' id='$val' name='$name'>
+                <label for='$val'>" . ucfirst($val) . "</label><br>");
+            } else {
+                array_push($table, "<label for='$val'>" . ucfirst($val) . "</label><br>
+                <input type='$type' id='$val' name='$name'>");
+            }
         }
         $this->result .= "<fieldset><legend>" . $legend . "</legend>" . implode("", $table) . "</fieldset>";
         return $this;
     }
 
-    public function button($class, $value)
+    /**
+     * Display one button
+     *
+     * @param [type] $class
+     * @param [type] $value
+     * @return self
+     */
+
+    public function button($class, $value): self
     {
         $this->result .= "<button type='button' class='$class'>$value</button>";
         return $this;
     }
 
+
+    /**
+     * Generate the form. This method is needed in order to close the form tag
+     *
+     * @return void
+     */
     public function generate()
     {
+        $this->result .= "</form>";
         return $this->result;
-    }
-
-    public function destruct()
-    {
-        return "</form>";
     }
 }

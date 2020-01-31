@@ -21,20 +21,19 @@ use form\formbuilder as myform;
 
     <?php
 
-    $form1 = new myform('', '', 'form-group');
+    $form1 = new myform();
     echo $form1->label('name', 'Nom')
-        ->input('text', 'nameId', 'name', 'coucou', 20)
+        ->input('name', '', '', 'id', 'class', '', 20, 'required')
         ->label('selectid', 'Nom')
-        ->selectOpt('selectid', 'form-control form-control-lg', ['option1', 'option2', 'option3'], $required='required')
+        ->selectOpt('selectid', 'form-control form-control-lg', ['option1', 'option2', 'option3'], $required = 'required')
         ->textarea('txtarea', 'txtclass', '', 10, 20)
         ->checkradio('radio', 'rad', 'myrad', 'Mon_radio', 'chcked', 'required')
         ->file('file', 'pdfjpg', ['image/png', 'image/jpeg'])
-        ->fieldset('radio', 'Liste de film', ['Horreur', 'Thriller', 'Comédie'], 'film')
+        ->fieldset('radio', 'Liste de film', ['Horreur', 'Thriller', 'Comédie'], 'film', true)
         ->button('btn btn-primary', 'Envoyer')
-        ->input('submit','btnsub','button', '', 'Submit')
+        ->input('submit', 'btnsub', 'submit')
         ->generate();
     ?>
 
 </body>
-
 </html>
