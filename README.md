@@ -192,6 +192,8 @@ generate
 
 You can also chaining all of these methods using the Fluent pattern like this :
 
+(Please keep in mind, that you have the choice to use whatever methods you want)
+
 ```
         $form1 = new myform();
         echo $form1->label('for', 'textlabel')
