@@ -41,7 +41,7 @@ class formbuilder
      * @return self
      */
 
-    public function label($for, string $text): self
+    public function label(string $for, string $text): self
     {
         $this->result .= "<label type='$for'>$text</label>";
         return $this;
@@ -82,7 +82,7 @@ class formbuilder
      * @return self
      */
 
-    public function checkradio($type, $name, $value, $checked = "", $required = "", $class = "", $id = ""): self
+    public function checkradio($type, $name, $value, $checked = "", $required = "", $id = "", $class = ""): self
     {
         $b = $this->test($checked, 'checked');
         $c = $this->test($required, 'required');
@@ -100,7 +100,7 @@ class formbuilder
      * @return self
      */
 
-    public function file($id, $name, array $accept, $required = ""): self
+    public function file($name, array $accept, $required = "", $id="", $class=""): self
     {
         $b = $this->test($required, 'required');
         $result = [];
@@ -108,7 +108,7 @@ class formbuilder
             array_push($result, $val);
         }
 
-        $this->result .= "<input type='file' id ='$id' name ='$name' accept=" . implode(', ', $result) . $b . ">";
+        $this->result .= "<input type='file' id ='$id' class='$class' name ='$name' accept=" . implode(', ', $result) . $b . ">";
         return $this;
     }
 
@@ -124,8 +124,7 @@ class formbuilder
      * @param string $required
      * @return self
      */
-
-    public function textarea($id, $name, $placeholder = "", $rows = "", $cols = "", $class = "", $required = ""): self
+    public function textarea($name, $placeholder = "", $rows = "", $cols = "", $required = "", $id="", $class = ""): self
     {
         $b = $this->test($required, 'required');
         $this->result .= "<textarea id ='$id' class='$class' name ='$name' rows='$rows' cols='$cols' placeholder='$placeholder'" . $b . "></textarea>";
@@ -135,21 +134,21 @@ class formbuilder
     /**
      * Display one select with the given option array, keep in mind that the name of the option will be the same of the value
      *
-     * @param [type] $id
      * @param [type] $name
      * @param array $option
      * @param string $required
+     * @param string $id
+     * @param string $class
      * @return self
      */
-
-    public function selectOpt($id, $name, array $option, $required = ""): self
+    public function selectOpt($name, array $option, $required = "", $id="", $class=" "): self
     {
         $b = $this->test($required, 'required');
         $result = [];
         foreach ($option as $val) {
             array_push($result, "<option>" . $val . "</option>");
         }
-        $this->result .= "<select id ='$id' name ='$name' $b >" . implode("", $result) . "</select>";
+        $this->result .= "<select id ='$id' name ='$name' $b class='$class' >" . implode("", $result) . "</select>";
         return $this;
     }
 
@@ -189,9 +188,9 @@ class formbuilder
      * @return self
      */
 
-    public function button($class, $value): self
+    public function button($value, $id="", $class=""): self
     {
-        $this->result .= "<button type='button' class='$class'>$value</button>";
+        $this->result .= "<button type='button' id='$id' class='$class'>$value</button>";
         return $this;
     }
 

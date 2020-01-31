@@ -27,10 +27,7 @@
 - [Deployment](#deployment)
 - [Usage](#usage)
 - [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
 - [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
 
@@ -72,6 +69,7 @@ Step 1 - Require the class formbuilder :
 require_once('./vendor/form/formbuilder.php');
 
 ```
+
 Step 2 - Use the namespace of the formbuilder like this example :
 
 ```
@@ -85,6 +83,7 @@ Step 3 - Call the class formbuilder by the nameofmyform :
 $form1 = new myform();
 
 ```
+
 Step 4 - Your are now able to use your first form builder ! :
 
 ```
@@ -92,49 +91,124 @@ echo $form1->label('name', 'Name')
 
 ```
 
-## 🔧 Running the tests <a name = "tests"></a>
-
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## 🎈 Usage <a name="usage"></a>
 
-Add notes about how to use the system.
+- By default, you have to call new myform() in a variable to instantiate the form builder. This method will open the tag of your form.
 
-## 🚀 Deployment <a name = "deployment"></a>
+Then if you think that you have finished with your form, you have to declare the generate method in order to close your form.
 
-Add additional notes about how to deploy this on a live system.
+- First know that the attributes provided are as follows:
+
+* `action: empty, submit to current URL`
+* `method: by default get if empty`
+* `class: empty by default`
+* `id: empty by default`
+* `name: empty by default`
+* `for: string required`
+* `type: type or text by default`
+* `value: string or none`
+* `placeholder: text or none`
+* `size: number or none`
+* `required: required or none`
+* `checked: checked or none`
+
+- By this formbuilder, you can display easily a form tags with these attributes please call these methods :
+
+First, please refer to the previous section to see what are the needed attributes for all of the method.
+
+Let's says we have an instance of our myform in a variable like this with the action, method and class :
+
+```
+$form1 = new myform('action.php', 'post', 'class');
+
+```
+
+To display a label please call the label method :
+
+```
+echo $form1->label('for', 'textlabel')
+
+```
+
+To display a input please call the input method, note that the required is not needed :
+
+```
+echo $form1->input('name', 'value', 'type', 'id', 'class', 'placeholder', 20, 'required')
+
+```
+
+To display a select option please call the selectOpt method :
+
+```
+echo $form1->selectOpt('selectid',  ['option1', 'option2', 'option3'], $required = 'required', 'id', 'form-control form-control-lg')
+
+```
+
+To display a textarea tag please call the textarea method :
+
+```
+echo $form1->textarea('txtarea', 'txtclass', 10, 20, 'required', 'id', 'class')
+
+```
+
+To display a checkbox or a radio button tag please call the chekradio method :
+
+```
+echo $form1->checkradio('radio', 'name', 'My_radio', 'checked', 'required', 'id', 'class') // The first argument is radio or checkbox
+
+```
+
+To display a input file to allow the user to send a file, you have to call the file method :
+
+```
+echo $form1->file('file',  ['image/png', 'image/jpeg'], 'id', 'class') // the second argument is an array of the accepts files
+
+```
+
+To display a fieldset with option, call the file method :
+
+```
+echo $form1->fieldset('radio', 'List of film', ['Horror', 'Thriller', 'Comedy'], 'film', true)
+
+// the third argument is a list of the content to display and the last is the order to display the label and the input, if it's true the input will be display before the label
+
+```
+
+To display a button, please call the button method :
+
+```
+echo $form1->button( 'value', 'id', 'class')
+
+```
+
+To close the form and display it, please call the generate method :
+
+```
+echo $form1->generate();
+
+```
+
+generate
+
+You can also chaining all of these methods using the Fluent pattern like this :
+
+```
+        $form1 = new myform();
+        echo $form1->label('for', 'textlabel')
+        ->input('name', 'value', 'type', 'id', 'class', 'placeholder', 20, 'required')
+        ->selectOpt('selectid',  ['option1', 'option2', 'option3'], $required = 'required', 'id', 'form-control form-control-lg')
+        ->textarea('txtarea', 'txtclass', 10, 20, 'required', 'id', 'class')
+        ->checkradio('radio', 'name', 'My_radio', 'checked', 'required', 'id', 'class')
+        ->file('file',  ['image/png', 'image/jpeg'], 'id', 'class')
+        ->fieldset('radio', 'List of film', ['Horror', 'Thriller', 'Comedy'], 'film', true)
+        ->button( 'value', 'id', 'class')
+        ->generate();
+```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [PHP] - Server Environment
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- [@mohammedlaslaa](https://github.com/mohammedlaslaa) - Idea & Initial work

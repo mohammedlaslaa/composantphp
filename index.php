@@ -22,18 +22,17 @@ use form\formbuilder as myform;
     <?php
 
     $form1 = new myform();
-    echo $form1->label('name', 'Nom')
-        ->input('name', '', '', 'id', 'class', '', 20, 'required')
-        ->label('selectid', 'Nom')
-        ->selectOpt('selectid', 'form-control form-control-lg', ['option1', 'option2', 'option3'], $required = 'required')
-        ->textarea('txtarea', 'txtclass', '', 10, 20)
-        ->checkradio('radio', 'rad', 'myrad', 'Mon_radio', 'chcked', 'required')
-        ->file('file', 'pdfjpg', ['image/png', 'image/jpeg'])
-        ->fieldset('radio', 'Liste de film', ['Horreur', 'Thriller', 'Comédie'], 'film', true)
-        ->button('btn btn-primary', 'Envoyer')
-        ->input('submit', 'btnsub', 'submit')
+    echo $form1->label('for', 'textlabel')
+        ->input('name', 'value', 'type', 'id', 'class', 'placeholder', 20, 'required')
+        ->selectOpt('selectid',  ['option1', 'option2', 'option3'], $required = 'required', 'id', 'form-control form-control-lg')
+        ->textarea('txtarea', 'txtclass', 10, 20, 'required', 'id', 'class')
+        ->checkradio('radio', 'name', 'My_radio', 'checked', 'required', 'id', 'class')
+        ->file('file',  ['image/png', 'image/jpeg'], 'id', 'class')
+        ->fieldset('radio', 'List of film', ['Horror', 'Thriller', 'Comedy'], 'film', true)
+        ->button('value', 'id', 'class')
         ->generate();
     ?>
 
 </body>
+
 </html>
