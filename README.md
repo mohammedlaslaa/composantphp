@@ -3,7 +3,7 @@
  <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">PHP Form Builder</h3>
 
 <div align="center">
 
@@ -16,7 +16,7 @@
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> This form builder comes from an idea in order to make the developers life more easier.
     <br> 
 </p>
 
@@ -34,7 +34,9 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+Build one form in HTML is quite simple. But what else about build many forms.
+
+The form builder is a simple class which will save you a lot of time.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -42,29 +44,53 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
+You just need to be able to run PHP files on your machines, if that is the case, let's go forward !
+
+Just copy all of these folders. I put in the folder an exemple of how to call the form builder whith a namespace, instantiate this, and make the tags of a form.
 
 ```
-Give examples
+require_once('./vendor/form/formbuilder.php');
+
+use form\formbuilder as myform;
+
+$form1 = new myform();
+
+echo $form1->label('name', 'Nom')
+
+You'll find all of possibilities in the index.php.
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
+I consider that you know how to put one class in your development environment and how to call this. If it's not the case, please go read the documenttaion of PHP. After that, please follow, these steps.
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+Step 1 - Require the class formbuilder :
 
 ```
-until finished
+<?php
+
+require_once('./vendor/form/formbuilder.php');
+
+```
+Step 2 - Use the namespace of the formbuilder like this example :
+
+```
+use form\formbuilder as nameofmyform;
+
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
+Step 3 - Call the class formbuilder by the nameofmyform :
+
+```
+$form1 = new myform();
+
+```
+Step 4 - Your are now able to use your first form builder ! :
+
+```
+echo $form1->label('name', 'Name')
+
+```
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
