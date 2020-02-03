@@ -41,7 +41,7 @@ class formbuilder
      * @return self
      */
 
-    public function label(string $for, string $text): self
+    public function label(string $for, string $text) :self
     {
         $this->result .= "<label type='$for'>$text</label>";
         return $this;
@@ -100,7 +100,7 @@ class formbuilder
      * @return self
      */
 
-    public function file($name, array $accept, $required = "", $id="", $class=""): self
+    public function file($name, array $accept, $required = "", $id = "", $class = ""): self
     {
         $b = $this->test($required, 'required');
         $result = [];
@@ -124,7 +124,8 @@ class formbuilder
      * @param string $required
      * @return self
      */
-    public function textarea($name, $placeholder = "", $rows = "", $cols = "", $required = "", $id="", $class = ""): self
+
+    public function textarea($name, $placeholder = "", $rows = "", $cols = "", $required = "", $id = "", $class = ""): self
     {
         $b = $this->test($required, 'required');
         $this->result .= "<textarea id ='$id' class='$class' name ='$name' rows='$rows' cols='$cols' placeholder='$placeholder'" . $b . "></textarea>";
@@ -141,7 +142,8 @@ class formbuilder
      * @param string $class
      * @return self
      */
-    public function selectOpt($name, array $option, $required = "", $id="", $class=" "): self
+
+    public function selectOpt($name, array $option, $required = "", $id = "", $class = " "): self
     {
         $b = $this->test($required, 'required');
         $result = [];
@@ -153,30 +155,28 @@ class formbuilder
     }
 
     /**
-     * Display fieldset with legend. The type of the inputs on the fieldset stay the same in all of this. 
+     * Start fieldset with legend
      *
-     * @param [type] $type
      * @param [type] $legend
-     * @param array $array
-     * @param [type] $name
+     * @param string $class
+     * @param string $id
      * @return self
      */
 
-    public function fieldset($type, $legend, array $array, $name, $before = "true"): self
+    public function startFieldset($legend, $class = "", $id = ""):self
     {
-        $b = $before ? true : false;
-        $table = [];
+        $this->result .= "<fieldset class='$class' id='$id'><legend>" . $legend . "</legend>";
+        return $this;
+    }
 
-        foreach ($array as $val) {
-            if ($b) {
-                array_push($table, "<input type='$type' id='$val' name='$name'>
-                <label for='$val'>" . ucfirst($val) . "</label><br>");
-            } else {
-                array_push($table, "<label for='$val'>" . ucfirst($val) . "</label><br>
-                <input type='$type' id='$val' name='$name'>");
-            }
-        }
-        $this->result .= "<fieldset><legend>" . $legend . "</legend>" . implode("", $table) . "</fieldset>";
+    /**
+     * Undocuented function
+     *
+     * @return self
+     */
+
+    public function endFieldset() :self {
+        $this->result .= "</fieldset>";
         return $this;
     }
 
@@ -188,7 +188,7 @@ class formbuilder
      * @return self
      */
 
-    public function button($value, $id="", $class=""): self
+    public function button($value, $id = "", $class = ""): self
     {
         $this->result .= "<button type='button' id='$id' class='$class'>$value</button>";
         return $this;
@@ -200,9 +200,13 @@ class formbuilder
      *
      * @return void
      */
+
     public function generate()
     {
         $this->result .= "</form>";
-        return $this->result;
+        $temp = $this->result;
+        $this->result = "";
+        return $temp;
     }
+
 }

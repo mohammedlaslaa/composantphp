@@ -50,9 +50,9 @@ require_once('./vendor/form/formbuilder.php');
 
 use form\formbuilder as myform;
 
-$form1 = new myform();
+$form = new myform();
 
-echo $form1->label('name', 'Nom')
+echo $form->label('name', 'Nom')
 
 You'll find all of possibilities in the index.php.
 ```
@@ -80,14 +80,14 @@ use form\formbuilder as nameofmyform;
 Step 3 - Call the class formbuilder by the nameofmyform :
 
 ```
-$form1 = new myform();
+$form = new myform();
 
 ```
 
 Step 4 - Your are now able to use your first form builder ! :
 
 ```
-echo $form1->label('name', 'Name')
+echo $form->label('name', 'Name')->generate()
 
 ```
 
@@ -114,87 +114,92 @@ Then if you think that you have finished with your form, you have to declare the
 
 - By this formbuilder, you can display easily a form tags with these attributes please call these methods :
 
-First, please refer to the previous section to see what are the needed attributes for all of the method.
+First, please refer to the previous section to see what are the needed attributes for all of those methods.
 
 Let's says we have an instance of our myform in a variable like this with the action, method and class :
 
 ```
-$form1 = new myform('action.php', 'post', 'class');
+$form = new myform('action.php', 'post', 'class');
 
 ```
 
 To display a label please call the label method :
 
 ```
-echo $form1->label('for', 'textlabel')
+$form->label('for', 'textlabel')
 
 ```
 
 To display a input please call the input method, note that the required is not needed :
 
 ```
-echo $form1->input('name', 'value', 'type', 'id', 'class', 'placeholder', 20, 'required')
+$form->input('name', 'value', 'type', 'id', 'class', 'placeholder', 20, 'required')
 
 ```
 
 To display a select option please call the selectOpt method :
 
 ```
-echo $form1->selectOpt('selectid',  ['option1', 'option2', 'option3'], $required = 'required', 'id', 'form-control form-control-lg')
+$form->selectOpt('selectid',  ['option1', 'option2', 'option3'], $required = 'required', 'id', 'form-control form-control-lg')
 
 ```
 
 To display a textarea tag please call the textarea method :
 
 ```
-echo $form1->textarea('txtarea', 'txtclass', 10, 20, 'required', 'id', 'class')
+$form->textarea('txtarea', 'txtclass', 10, 20, 'required', 'id', 'class')
 
 ```
 
 To display a checkbox or a radio button tag please call the chekradio method :
 
 ```
-echo $form1->checkradio('radio', 'name', 'My_radio', 'checked', 'required', 'id', 'class') // The first argument is radio or checkbox
+$form->checkradio('radio', 'name', 'My_radio', 'checked', 'required', 'id', 'class') // The first argument is radio or checkbox
 
 ```
 
 To display a input file to allow the user to send a file, you have to call the file method :
 
 ```
-echo $form1->file('file',  ['image/png', 'image/jpeg'], 'id', 'class') // the second argument is an array of the accepts files
+$form->file('file',  ['image/png', 'image/jpeg'], 'id', 'class') // the second argument is an array of the accepts files
 
 ```
 
-To display a fieldset with option, call the file method :
+To open a fieldset call the startFieldset method :
 
 ```
-echo $form1->fieldset('radio', 'List of film', ['Horror', 'Thriller', 'Comedy'], 'film', true)
+$form->startFieldset('legend', 'class', 'id')
 
-// the third argument is a list of the content to display and the last is the order to display the label and the input, if it's true the input will be display before the label
+```
+
+To close a fieldset, call the endFieldset method :
+
+```
+$form->endFieldset()
 
 ```
 
 To display a button, please call the button method :
 
 ```
-echo $form1->button( 'value', 'id', 'class')
+$form->button( 'value', 'id', 'class')
 
 ```
 
-To close the form and display it, please call the generate method :
+To display and close a form, please call the generate method :
 
 ```
-echo $form1->generate();
+$form->generate();
 
 ```
 
 You can also chaining all of these methods using the Fluent pattern like this :
 
-(Please keep in mind, that you have the choice to use whatever methods you want)
+(Please keep in mind, that you have the choice to use whatever methods you want and in the order of your choice)
 
 ```
-        $form1 = new myform();
-        echo $form1->label('for', 'textlabel')
+        $form = new myform();
+        echo $form->label('for', 'textlabel')
         ->input('name', 'value', 'type', 'id', 'class', 'placeholder', 20, 'required')
         ->selectOpt('selectid',  ['option1', 'option2', 'option3'], $required = 'required', 'id', 'form-control form-control-lg')
         ->textarea('txtarea', 'txtclass', 10, 20, 'required', 'id', 'class')
