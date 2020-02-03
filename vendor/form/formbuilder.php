@@ -16,7 +16,7 @@ class formbuilder
 
     public function __construct($action = "", $method = "", $class = "")
     {
-        $this->result .= "<form class='$class' method='$method' action='$action'>";
+        $this->result .= "<form class='$class' method='$method' action='$action' enctype='multipart/form-data'>";
         return $this;
     }
 

@@ -23,6 +23,10 @@ use composant\validator as validator;
 
     <?php
 
+
+    var_dump($_FILES["upfile"]);
+    echo basename($_FILES["upfile"]["tmp_name"]);
+
     $form = new myform("index.php", "post");
     echo $form
         ->label('name', 'Nom')
@@ -32,7 +36,7 @@ use composant\validator as validator;
         ->label('url', 'URL')
         ->input('url', '', 'url', 'id', 'class', '')
         ->label('file', 'File')
-        ->input('file1', '', 'file', 'id', 'class', '')
+        ->input('upfile', '', 'file', 'id', 'class', '')
         ->label('date', 'Date')
         ->input('date', '', 'date', 'id', 'class', '')
         ->label('password', 'Mot de passe')
@@ -40,7 +44,7 @@ use composant\validator as validator;
         ->input('valid', 'envoyer', 'submit')
         ->generate();
 
-    if (isset($_POST['mail']) && isset($_POST['name']) && isset($_POST['password']) && isset($_POST['url'])) {
+    if (isset($_POST['valid'])) {
         $validator = new validator();
         $validator->testInputLength($_POST['name'], 10, "The name is incorrect")
             ->testMail($_POST['mail'], "Invalid email")
@@ -48,7 +52,7 @@ use composant\validator as validator;
             ->testDate($_POST['date'], 'Invalid Format date', "The separator must to be a hyphen")
             // ->inputMatchRegex($_POST['test'], "/^[a-z]*([.]|\w)[a-z]*\d*[@][a-z]*[.]\w{2,5}/", "Invalid regex message" )
             ->validUrl($_POST['url'], "Invalid URL")
-            ->validTypeMime($_FILES['file1']['tmp_name'], "This MIME Content-type is not valid")
+            ->validTypeMime('upfile', ['image/jpeg', 'image/png', 'application/pdf'], "uploads\\" ,"This MIME Content-type is not valid")
             ->isValid();
     }
     ?>
