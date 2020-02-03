@@ -1,6 +1,6 @@
 <?php
 
-namespace form;
+namespace composant;
 
 class formbuilder
 {

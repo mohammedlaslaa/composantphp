@@ -1,8 +1,10 @@
 <?php
 
 require_once('./vendor/form/formbuilder.php');
+require_once('./vendor/validator/validator.php');
 
-use form\formbuilder as myform;
+use composant\formbuilder as myform;
+use composant\validator as validator;
 
 ?>
 
@@ -21,18 +23,34 @@ use form\formbuilder as myform;
 
     <?php
 
-    $form = new myform();
-    echo $form->label('for', 'textlabel')
-        ->input('name', 'value', 'type', 'id', 'class', 'placeholder', 20, 'required')
-        ->selectOpt('selectid',  ['option1', 'option2', 'option3'], $required = 'required', 'id', 'form-control form-control-lg')
-        ->textarea('txtarea', 'txtclass', 10, 20, 'required', 'id', 'class')
-        ->checkradio('radio', 'name', 'My_radio', 'checked', 'required', 'id', 'class')
-        ->file('file',  ['image/png', 'image/jpeg'], 'id', 'class')
-        ->startFieldset('legend', 'class', 'id')
-        ->endFieldset()
-        ->button('value', 'id', 'class')
+    $form = new myform("index.php", "post");
+    echo $form
+        ->label('name', 'Nom')
+        ->input('name', '', 'text', 'id', 'class', '')
+        ->label('mail', 'Email')
+        ->input('mail', '', 'email', 'id', 'class', '')
+        ->label('url', 'URL')
+        ->input('url', '', 'url', 'id', 'class', '')
+        ->label('file', 'File')
+        ->input('file1', '', 'file', 'id', 'class', '')
+        ->label('date', 'Date')
+        ->input('date', '', 'date', 'id', 'class', '')
+        ->label('password', 'Mot de passe')
+        ->input('password', '', 'password', 'id', 'class', '')
+        ->input('valid', 'envoyer', 'submit')
         ->generate();
 
+    if (isset($_POST['mail']) && isset($_POST['name']) && isset($_POST['password']) && isset($_POST['url'])) {
+        $validator = new validator();
+        $validator->testInputLength($_POST['name'], 10, "The name is incorrect")
+            ->testMail($_POST['mail'], "Invalid email")
+            ->testPassword($_POST['password'], "Password")
+            ->testDate($_POST['date'], 'Invalid Format date', "The separator must to be a hyphen")
+            // ->inputMatchRegex($_POST['test'], "/^[a-z]*([.]|\w)[a-z]*\d*[@][a-z]*[.]\w{2,5}/", "Invalid regex message" )
+            ->validUrl($_POST['url'], "Invalid URL")
+            ->validTypeMime($_FILES['file1']['tmp_name'], "This MIME Content-type is not valid")
+            ->isValid();
+    }
     ?>
 
 </body>
