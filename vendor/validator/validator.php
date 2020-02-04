@@ -47,13 +47,11 @@ class validator
         return $this;
     }
 
-    public function validTypeMime($totest, array $listmime, $filetoregister, $message)
+    public function validTypeMime($totest, array $listmime, $message)
     {
         $mime = mime_content_type($_FILES[$totest]["tmp_name"]);
-        foreach($listmime as $val){
-            if ($val == $mime ) {
-                $name = basename($_FILES[$totest]["name"]);
-                move_uploaded_file($_FILES[$totest]["tmp_name"], "$filetoregister/$name");
+        foreach ($listmime as $val) {
+            if ($val == $mime) {
                 return $this;
             }
         }

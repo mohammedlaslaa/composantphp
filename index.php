@@ -23,10 +23,6 @@ use composant\validator as validator;
 
     <?php
 
-
-    var_dump($_FILES["upfile"]);
-    echo basename($_FILES["upfile"]["tmp_name"]);
-
     $form = new myform("index.php", "post");
     echo $form
         ->label('name', 'Nom')
@@ -52,7 +48,7 @@ use composant\validator as validator;
             ->testDate($_POST['date'], 'Invalid Format date', "The separator must to be a hyphen")
             // ->inputMatchRegex($_POST['test'], "/^[a-z]*([.]|\w)[a-z]*\d*[@][a-z]*[.]\w{2,5}/", "Invalid regex message" )
             ->validUrl($_POST['url'], "Invalid URL")
-            ->validTypeMime('upfile', ['image/jpeg', 'image/png', 'application/pdf'], "uploads\\" ,"This MIME Content-type is not valid")
+            ->validTypeMime('upfile', ['image/jpeg', 'image/png', 'application/pdf'], "This MIME Content-type is not valid")
             ->isValid();
     }
     ?>

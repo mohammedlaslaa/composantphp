@@ -41,7 +41,7 @@ class formbuilder
      * @return self
      */
 
-    public function label(string $for, string $text) :self
+    public function label(string $for, string $text): self
     {
         $this->result .= "<label type='$for'>$text</label>";
         return $this;
@@ -107,7 +107,6 @@ class formbuilder
         foreach ($accept as $val) {
             array_push($result, $val);
         }
-
         $this->result .= "<input type='file' id ='$id' class='$class' name ='$name' accept=" . implode(', ', $result) . $b . ">";
         return $this;
     }
@@ -163,7 +162,7 @@ class formbuilder
      * @return self
      */
 
-    public function startFieldset($legend, $class = "", $id = ""):self
+    public function startFieldset($legend, $class = "", $id = ""): self
     {
         $this->result .= "<fieldset class='$class' id='$id'><legend>" . $legend . "</legend>";
         return $this;
@@ -175,7 +174,8 @@ class formbuilder
      * @return self
      */
 
-    public function endFieldset() :self {
+    public function endFieldset(): self
+    {
         $this->result .= "</fieldset>";
         return $this;
     }
@@ -208,5 +208,4 @@ class formbuilder
         $this->result = "";
         return $temp;
     }
-
 }
